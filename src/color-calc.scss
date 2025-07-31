@@ -1,0 +1,131 @@
+// Sass CSS preprocessor code
+@function diff-colors($a, $b) {
+  $sat: saturation($a) - saturation($b);
+  $lig: lightness($a) - lightness($b);
+  $fn-sat: if($sat > 0, 'desaturate', 'saturate');
+  $fn-lig: if($lig > 0, 'darken', 'lighten');
+
+  @return (hue: abs(-(hue($a) - hue($b))), #{$fn-sat}: abs($sat), #{$fn-lig}: abs($lig));
+}
+
+@function diff-hue($a, $b) {
+  $fn-h: if(hue($a) > hue($b), hue($b) - hue($a), -(hue($a) - hue($b)));
+  @return  $fn-h;
+}
+@function diff-sat($a, $b) {
+  $sat: saturation($a) - saturation($b);
+  $fn-sat: if(saturation($a) > saturation($b), saturation($b) - saturation($a), -(saturation($a) - saturation($b)));
+  @return $fn-sat;
+}
+@function diff-lig($a, $b) {
+  $lig: -(lightness($a) - lightness($b));
+  $fn-lig: if(lightness($a) > lightness($b), lightness($b) - lightness($a), -(lightness($a) - lightness($b)));
+  @return $fn-lig;
+}
+
+// Variables which depend on functions
+
+$primary: #A3CAE8;
+$prime-diff: #C84B4B; //#f5398a
+// $prime-diff: darken($primary, 14%);
+// $prime-diff: lighten($primary, 10%);
+
+
+$diff: diff-colors($primary, $prime-diff);
+$diff-hue: diff-hue($primary, $prime-diff);
+$diff-sat: diff-sat($primary, $prime-diff);
+$diff-lig: diff-lig($primary, $prime-diff);
+
+// make a list
+$colors:  $primary
+          $prime-diff
+          hue($primary)
+          hue($prime-diff)
+          $diff-hue
+          saturation($primary)
+          saturation($prime-diff)          
+          $diff-sat
+          lightness($primary)
+          lightness($prime-diff)
+          $diff-lig
+          adjust-color($primary, $hue: $diff-hue, $saturation: $diff-sat, $lightness: $diff-lig);
+
+$description: "Primary " "Prime Diff " "$a hue: " "$b hue: " "hue diff: " "$a sat: " "$b sat: " "$sat diff: " "$a lt: " "$b lt: " "$lt diff: " "Verify out: ";
+
+.diff:after {
+  content: "$diff";
+}
+
+div{
+  display: flex;
+  text-align: start;
+  margin: 0.1em 1em;
+  padding: 0 4px;
+  height: 2.4rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  align-items: baseline;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 20rem;
+  max-inline-size: fit-content;
+  
+  &:first-of-type, &:nth-of-type(2), &:nth-of-type(3n+2), &:last-of-type {
+    border: 1px inset;
+  }
+  &:nth-of-type(5) {
+    background-color: hsl(hue($prime-diff), saturation($primary), lightness($primary));
+  }
+  &:nth-of-type(8) {
+    background-color: hsl(hue($primary), saturation($prime-diff), lightness($primary));
+  }
+  &:nth-of-type(11) {
+    background-color: hsl(hue($primary), saturation($primary), lightness($prime-diff));
+  }
+  &:before, &:after {
+    border-bottom: 1px inset #888;
+    display: block;
+    margin-top: 15%;
+    min-width: 80px;
+  }
+  &:before {
+    margin-left: 130%;
+  }
+  &:after{
+    align-content: flex-end;
+    text-align: right;
+    content: "void";
+    min-width: 120px;
+  }
+  &:first-of-type:after, &:nth-of-type(2):after, &:last-of-type:after {
+    text-align: center;
+  }
+}
+
+@for $m from 1 through length($description) {
+  $d: nth($description, $m);
+  .color-#{$m} {
+    &:before {
+      content: "#{$d}"
+    }
+  }
+}
+
+@for $i from 1 through length($colors) {
+  $c: nth($colors, $i);
+  .color-#{$i} { 
+    background-color: #{$c};
+    
+    &:after { 
+      content: "#{$c}";
+    }
+  }
+}
+
+h1,
+p {
+  padding: 0 1rem 1.2rem;
+  max-width: 17.5rem;
+  line-height: 1.56em,
+}

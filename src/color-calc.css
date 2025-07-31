@@ -1,0 +1,292 @@
+:root {
+  @property --primary-color {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: "#a3cae8";
+  }
+  --primary-color: #a3cae8;
+
+  @property --primary-diff-color {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: "#c84b4b";
+  }
+  --primary-diff-color: #c84b4b;
+
+  @property --diff-hue {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: "0deg";
+  }
+  --diff-hue: 0deg;
+  --diff-hue-color: #ffffff;
+
+  @property --diff-sat {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: "0%";
+  }
+  --diff-sat: 0%;
+  --diff-sat-color: #ffffff;
+
+  @property --diff-lgt {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: "0%";
+  }
+  --diff-lgt: 0%;
+  --diff-lgt-color: #ffffff;
+
+  @property --verify-adjust-color-hsl {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: "#c84b4b";
+  }
+  --verify-adjust-color-hsl: #c84b4b;
+
+  --mask-circle-gradient: radial-gradient(
+    13px circle,
+    transparent 5px,
+    gray 14px,
+    white 14px
+  );
+
+  --moving-bar: #000a2e;
+  --static-center-bar: #0e1531;
+
+  --mask-linear-gradient: linear-gradient(0deg, transparent 38%, white 100%);
+
+  --mask-center-axis: linear-gradient(
+    90deg,
+    transparent 48%,
+    var(--static-center-bar) 50%,
+    transparent 52%
+  );
+
+  --x-axis-gradient: linear-gradient(
+    var(--diff-hue),
+    transparent 47%,
+    red 50%,
+    transparent 53%
+  );
+
+  --y-axis-gradient: linear-gradient(
+    calc(var(--diff-hue) + 90deg),
+    transparent 47%,
+    green 50%,
+    transparent 53%
+  );
+}
+
+.diff:after {
+  content: "$diff";
+}
+
+div {
+  display: flex;
+  text-align: start;
+  margin: 0.1em 1em;
+  padding: 0 4px;
+  height: 2.4rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  align-items: baseline;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 20rem;
+  max-inline-size: fit-content;
+}
+
+div:first-of-type .detail-label:before,
+div:nth-of-type(2) .detail-label:before,
+div:nth-of-type(3n + 2) .detail-label:before,
+div:last-of-type .detail-label:before {
+  border: 1px inset;
+  border-radius: 8% 8% 8% 8% / 12% 12% 12% 12%;
+}
+
+div[class^="detail-"]:after {
+  align-content: flex-end;
+  text-align: right;
+  min-width: 120px;
+}
+
+div[class^="detail-"] {
+  text-align: left;
+  border-bottom: 1px inset #888;
+}
+
+.detail-label {
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.detail-label:before {
+  display: block;
+  width: 4rem;
+  height: 2rem;
+  content: "  ";
+}
+
+.detail-1 .detail-label:before {
+  background-color: var(--primary-color);
+}
+
+.detail-2 .detail-label:before {
+  background-color: var(--primary-diff-color);
+}
+
+.detail-3 .detail-label:before {
+  --moving-var: calc((((var(--primary-hue) / 360) * 100) + 100) * 0.5%);
+
+  max-width: var(--moving-var);
+  background-image: linear-gradient(
+    90deg,
+    transparent calc(var(--moving-var) - 3%),
+    var(--moving-bar) var(--moving-var),
+    transparent calc(var(--moving-var) + 3%)
+  );
+  border-inline-start: 1px solid var(--diff-hue-color);
+  border-inline-end: 1px solid var(--diff-hue-color);
+}
+
+.detail-4 .detail-label:before {
+  --moving-var: calc((((var(--delta-hue) / 360) * 100) + 100) * 0.5%);
+
+  background-image: linear-gradient(
+    90deg,
+    transparent calc(var(--moving-var) - 3%),
+    var(--moving-bar) var(--moving-var),
+    transparent calc(var(--moving-var) + 3%)
+  );
+  border-inline-start: 1px solid var(--diff-hue-color);
+  border-inline-end: 1px solid var(--diff-hue-color);
+}
+
+.detail-5 .detail-label:before {
+  background-image:
+    radial-gradient(
+      circle,
+      transparent 40%,
+      var(--diff-hue-color) 41%,
+      var(--diff-hue-color) 93%,
+      transparent 100%
+    ),
+    var(--mask-circle-gradient),
+    linear-gradient(var(--diff-hue), transparent 47%, red 50%, transparent 53%),
+    linear-gradient(
+      calc(var(--diff-hue) + 90deg),
+      transparent 47%,
+      green 50%,
+      transparent 53%
+    );
+}
+
+.detail-6 .detail-label:before {
+  --moving-var: calc((var(--primary-sat) + 100%) / 2);
+
+  background-image:
+    var(--mask-center-axis), var(--mask-linear-gradient),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--moving-var) - 3%),
+      var(--moving-bar) var(--moving-var),
+      transparent calc(var(--moving-var) + 3%)
+    );
+}
+
+.detail-7 .detail-label:before {
+  --moving-var: calc((var(--delta-sat) + 100%) / 2);
+
+  background-image:
+    var(--mask-center-axis), var(--mask-linear-gradient),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--moving-var) - 3%),
+      var(--moving-bar) var(--moving-var),
+      transparent calc(var(--moving-var) + 3%)
+    );
+}
+
+.detail-8 .detail-label:before {
+  --moving-var: calc((var(--diff-sat) + 100%) / 2);
+
+  background-image:
+    var(--mask-center-axis), var(--mask-linear-gradient),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--moving-var) - 3%),
+      var(--moving-bar) var(--moving-var),
+      transparent calc(var(--moving-var) + 3%)
+    );
+}
+
+.detail-9 .detail-label:before {
+  --moving-var: calc((var(--primary-lgt) + 100%) / 2);
+
+  background-image:
+    var(--mask-center-axis), var(--mask-linear-gradient),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--moving-var) - 3%),
+      var(--moving-bar) var(--moving-var),
+      transparent calc(var(--moving-var) + 3%)
+    );
+}
+
+.detail-10 .detail-label:before {
+  --moving-var: calc((var(--delta-lgt) + 100%) / 2);
+
+  background-image:
+    var(--mask-center-axis), var(--mask-linear-gradient),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--moving-var) - 3%),
+      var(--moving-bar) var(--moving-var),
+      transparent calc(var(--moving-var) + 3%)
+    );
+}
+
+.detail-11 .detail-label:before {
+  --moving-var: calc((var(--diff-lgt) + 100%) / 2);
+
+  background-image:
+    var(--mask-center-axis), var(--mask-linear-gradient),
+    linear-gradient(
+      90deg,
+      transparent calc(var(--moving-var) - 3%),
+      var(--moving-bar) var(--moving-var),
+      transparent calc(var(--moving-var) + 3%)
+    );
+}
+
+.detail-12 .detail-label:before {
+  background-color: var(--verify-adjust-color-hsl);
+}
+
+h1,
+p {
+  padding-inline: 1rem;
+  line-height: 1.56em;
+}
+
+form {
+  display: inline-block;
+  padding-inline: 1rem;
+  min-inline-size: 20rem;
+}
+
+fieldset {
+  max-width: 20rem;
+  display: grid;
+  grid-template-areas: "label color";
+  justify-content: space-between;
+  align-content: stretch;
+  /* grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); */
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem auto;
+}
