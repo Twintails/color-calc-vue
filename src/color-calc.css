@@ -1,4 +1,6 @@
 :root {
+  --detail-view-background: #e2e2e2;
+
   @property --primary-color {
     syntax: "<color>";
     inherits: true;
@@ -47,14 +49,18 @@
   --mask-circle-gradient: radial-gradient(
     13px circle,
     transparent 5px,
-    gray 14px,
-    white 14px
+    #8c8c8c 14px,
+    var(--detail-view-background) 14px
   );
 
   --moving-bar: #000a2e;
   --static-center-bar: #0e1531;
 
-  --mask-linear-gradient: linear-gradient(0deg, transparent 38%, white 100%);
+  --mask-linear-gradient: linear-gradient(
+    0deg,
+    transparent 38%,
+    var(--detail-view-background) 100%
+  );
 
   --mask-center-axis: linear-gradient(
     90deg,
@@ -126,6 +132,7 @@ div[class^="detail-"] {
 
 .detail-label:before {
   display: block;
+  background-color: var(--detail-view-background);
   width: 4rem;
   height: 2rem;
   content: "  ";

@@ -30,11 +30,12 @@
     </span>
   </div>
   <p>'Verify Out' should equal 'Prime Diff'</p>
-  <pre id="color-diff-output">{{ colorDiffOutput }}</pre>
+  <Preformatted :value="diffColors(primary, primaryDiff)" />
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
+import Preformatted from "./Preformatted.vue";
 import { details, initialState } from "../assets/constants";
 import { hslDiff, hexToHSL, diffColors, adjustColorHSL } from "../utils/diff";
 
@@ -189,10 +190,6 @@ watch([primary, primaryDiff], ([newPrimary, newPrimaryDiff]) => {
   calculateDetails();
   setColors();
 });
-
-const colorDiffOutput = computed(() =>
-  JSON.stringify(diffColors(primary.value, primaryDiff.value), null, 2),
-);
 </script>
 
 <style>

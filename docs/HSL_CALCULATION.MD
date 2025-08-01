@@ -8,7 +8,7 @@ This document summarizes the differences between the RGB→HSL conversion algori
 - **Sass (LibSass/Dart Sass)**
 - **Color theory and mathematical models (Wikipedia, Joblove & Greenberg, etc.)**
 
-It also provides references, code snippets, and guidance for achieving the most mathematically precise HSL conversion in JavaScript/TypeScript.
+It also provides references, code snippets, and guidance for achieving the most mathematically precise HSL conversion in JavaScript/TypeScript.[^§]
 
 ---
 
@@ -25,35 +25,35 @@ It also provides references, code snippets, and guidance for achieving the most 
   - Hue: piecewise, based on which channel is max
 
 ```js
-// MDN Example (JS)
-function rgbToHsl(r, g, b) {
-  r /= 255;
-  g /= 255;
-  b /= 255;
-  const max = Math.max(r, g, b),
-    min = Math.min(r, g, b);
-  let h,
-    s,
-    l = (max + min) / 2;
+// MDN Example (TS)
+function rgbToHsl(red: number, green: number, blue: number) {
+  red /= 255;
+  green /= 255;
+  blue /= 255;
+  const max = Math.max(red, green, blue),
+    min = Math.min(red, green, blue);
+  let hue = 0,
+    sat = 0,
+    lgt = (max + min) / 2;
   if (max === min) {
-    h = s = 0; // achromatic
+    hue = sat = 0; // achromatic
   } else {
     const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    sat = lgt > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
-      case r:
-        h = (g - b) / d + (g < b ? 6 : 0);
+      case red:
+        hue = (green - blue) / d + (green < blue ? 6 : 0);
         break;
-      case g:
-        h = (b - r) / d + 2;
+      case green:
+        hue = (blue - red) / d + 2;
         break;
-      case b:
-        h = (r - g) / d + 4;
+      case blue:
+        hue = (red - green) / d + 4;
         break;
     }
-    h /= 6;
+    hue /= 6;
   }
-  return [h * 360, s * 100, l * 100];
+  return [hue * 360, sat * 100, lgt * 100];
 }
 ```
 
@@ -127,6 +127,7 @@ To illustrate the differences between MDN and Sass HSL calculations, here are re
 ```mermaid
 ---
 config:
+    title: Meaningless data chart plotting small difference in calculation
     xyChart:
         width: 500
         height: 300
@@ -180,4 +181,4 @@ You can use these Mermaid charts in a compatible Markdown viewer to visualize th
 
 ---
 
-_This document was generated with reference to the above sources and is intended for developers and designers working with color math in web applications._
+[^§]: _I generated this document with GPT-4.1 in Copilot to support knowledge seekers, referencing the sources above. The intended audience is developers, designers, and knowledge seekers working with color math in web applications._

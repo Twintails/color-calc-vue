@@ -1,4 +1,7 @@
-// Sass CSS preprocessor code
+// Sass CSS preprocessor code - here for posterity of origin. Not used in this codebase.
+// This file contains functions and variables for color calculations in HSL
+// I did this as a bit of research for a style-guide --> Design System project - c. Sept. 18, 2017
+// origin --> https://codepen.io/Twintails/pen/JrGEwx
 @function diff-colors($a, $b) {
   $sat: saturation($a) - saturation($b);
   $lig: lightness($a) - lightness($b);

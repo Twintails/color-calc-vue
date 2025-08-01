@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ColorCalc.vue > updates --verify-adjust-color-hsl and applies it to .detail-label:before 1`] = `
+":root {
+    --primary-color: #a3cae8;
+    --primary-diff-color: #c84b4b;
+    --primary-hue: 206.086957;
+    --delta-hue: 0.000000;
+    --diff-hue: -206.086956522deg;
+    --diff-hue-color: hsl(-206.086956522deg,-6.808510638000001%,-23.529411765000006%);
+    --primary-sat: 60.000000%;
+    --delta-sat: 53.191489%;
+    --diff-sat: -6.808510638000001%;
+    --diff-sat-color: hsl(-206.086956522deg,-6.808510638000001%,-23.529411765000006%);
+    --primary-lgt: 53.921569%;
+    --delta-lgt: -23.529412%;
+    --diff-lgt: -23.529411765000006%;
+    --diff-lgt-color: hsl(-206.086956522deg,-6.808510638000001%,-23.529411765000006%);
+    --verify-adjust-color-hsl: #C84B4B;
+  }"
+`;

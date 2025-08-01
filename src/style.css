@@ -1,11 +1,63 @@
+/* JSON syntax highlighting for <pre id="color-diff-output"> */
+#color-diff-output {
+  font-family: "Fira Mono", "Menlo", "Consolas", monospace;
+  font-size: 1em;
+  background: var(--json-bg, #f6f8fa);
+  color: var(--json-fg, #24292e);
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+#color-diff-output .json-key {
+  color: #005cc5;
+}
+#color-diff-output .json-string {
+  color: #032f62;
+}
+#color-diff-output .json-number {
+  color: #22863a;
+}
+#color-diff-output .json-boolean {
+  color: #d73a49;
+}
+#color-diff-output .json-null {
+  color: #6f42c1;
+}
+
+@media (prefers-color-scheme: dark) {
+  #color-diff-output {
+    --json-bg: #22272e;
+    --json-fg: #adbac7;
+    background: var(--json-bg);
+    color: var(--json-fg);
+  }
+  #color-diff-output .json-key {
+    color: #79b8ff;
+  }
+  #color-diff-output .json-string {
+    color: #b392f0;
+  }
+  #color-diff-output .json-number {
+    color: #6bc46d;
+  }
+  #color-diff-output .json-boolean {
+    color: #f47067;
+  }
+  #color-diff-output .json-null {
+    color: #dcbdfb;
+  }
+}
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  /* color-scheme: light dark;
+  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424; */
+  background-color: #192119;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,16 +76,17 @@
 
 body {
   margin: 0;
-  display: block;
-  /* place-items: center;
-  min-width: 320px;
-  min-height: 100vh; */
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  justify-content: center;
 }
 
-/* h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-} */
+section {
+  display: flex;
+  flex-basis: 20rem;
+  flex-flow: column;
+}
 
 /* button {
   border-radius: 8px;
