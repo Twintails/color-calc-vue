@@ -102,7 +102,6 @@ function displayP3ToHex(p3: string): string {
 }
 
 function onColorInput(value: string) {
-  console.log("Input value:", value);
   // If not hex, try to convert
   if (!value.startsWith("#")) {
     if (value.startsWith("rgb")) {
