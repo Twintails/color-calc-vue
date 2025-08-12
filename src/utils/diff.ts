@@ -46,6 +46,36 @@ export function hslToHex(h: number, s: number, l: number): string {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
 }
 
+export function rgbToHex(rgb: string): string {
+  // Handles rgb(r, g, b) or rgba(r, g, b, a)
+  const result = rgb.match(/\d+/g);
+  if (!result) return rgb;
+  const hex = result
+    .slice(0, 3)
+    .map((x) => Number(x).toString(16).padStart(2, "0"))
+    .join("");
+  return `#${hex}`.toUpperCase();
+}
+
+export function displayP3ToHex(p3: string): string {
+  // Handles display-p3 r g b in [0,1] (Safari format)
+  // Example: display-p3 0.651403 0.173069 0.090712
+  const match = p3.match(
+    /(?!color\()display-p3\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)/,
+  );
+  if (!match) return p3;
+  const r = Math.round(Math.max(0, Math.min(1, parseFloat(match[1]))) * 255);
+  const g = Math.round(Math.max(0, Math.min(1, parseFloat(match[2]))) * 255);
+  const b = Math.round(Math.max(0, Math.min(1, parseFloat(match[3]))) * 255);
+  return (
+    "#" +
+    [r, g, b]
+      .map((x) => x.toString(16).padStart(2, "0"))
+      .join("")
+      .toUpperCase()
+  );
+}
+
 // Adjust color in HSL space, like Sass adjust-color
 export function adjustColorHSL(
   baseHex: string,

@@ -84,7 +84,7 @@
     "markdownlint.config": {
       "default": true,
       "MD003": {
-        "style": "atx_closed",
+        "style": "consistent",
       },
       "MD007": {
         "indent": 2,
