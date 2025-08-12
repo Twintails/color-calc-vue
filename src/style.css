@@ -87,8 +87,3 @@ section {
   flex-basis: 20rem;
   flex-flow: column;
 }
-
-footer {
-  padding: 1rem;
-  font-size: small;
-}
