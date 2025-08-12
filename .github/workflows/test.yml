@@ -1,0 +1,15 @@
+name: Run Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          ref: my-branch
+          node-version: "22"
+      - run: npm install
+      - run: npm test
