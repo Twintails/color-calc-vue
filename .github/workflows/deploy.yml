@@ -8,6 +8,7 @@ permissions:
   issues: write
   pull-requests: write
   id-token: write
+  pages: write
 
 jobs:
   build-and-upload:
