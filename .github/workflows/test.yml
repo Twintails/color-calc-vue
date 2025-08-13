@@ -1,6 +1,10 @@
 name: Run Tests
 
 on: [push, pull_request]
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   test:
@@ -12,3 +16,42 @@ jobs:
           node-version: "22"
       - run: npm install
       - run: npm test
+      - name: Show coverage summary
+        run: |
+          if [ -f coverage/summary.txt ]; then
+            cat coverage/summary.txt
+          else
+            echo "No coverage summary found."
+          fi
+      - name: Convert coverage summary to markdown
+        run: |
+          if [ -f coverage/summary.txt ]; then
+            {
+              echo '| Coverage    | summary |'
+              echo '|:---        | ---:|'
+              grep -E 'Statements|Branches|Functions|Lines' coverage/summary.txt | \
+              sed -E 's/^([^:]+):\s+([0-9.]+)% \(([^)]+)\)/| \1 | \2% ( \3 ) |/'
+            } > coverage/summary.md
+          else
+            echo 'No coverage summary available.' > coverage/summary.md
+          fi
+      - name: Read coverage summary
+        id: coverage
+        run: |
+          if [ -f coverage/summary.md ]; then
+            {
+              echo 'content<<EOF'
+              cat coverage/summary.md
+              echo 'EOF'
+            } >> $GITHUB_OUTPUT
+          else
+            echo 'content=No coverage summary available.' >> $GITHUB_OUTPUT
+          fi
+      - name: Post coverage comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: Coverage Report
+          recreate: true
+          message: |
+            Release ${{ github.sha }} to <https://twintails.github.io/color-calc-vue?rc=pr-${{ github.event.number }}>
+            ${{ steps.coverage.outputs.content }}
