@@ -28,27 +28,22 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Move built project
+        run: cd dist && mv color-calc-vue ../
       
-      - name: "Tar files"
-        run: cd dist && tar -cvf ../twintails_color-calc-vue.tar ./color-calc-vue
-
-      - name: Upload tar-tifact
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact 
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: gh-pages-color-calc-vue
-          path: twintails_color-calc-vue.tar
+          name: Twintails_color-calc-vue
+          path: ./color-calc-vue
 
-      - name: Download tar-tifact
-        uses: actions/download-artifact@v5
-        with:
-          name: gh-pages-color-calc-vue
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         id: deployment
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          artifact_name: gh-pages-color-calc-vue
+          artifact_name: Twintails_color-calc-vue
 
       - name: Output deployment URL
         run: |
